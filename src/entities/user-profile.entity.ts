@@ -44,4 +44,7 @@ export class UserProfile {
 
     @OneToMany(() => UserWorkout, workout => workout.userProfile)
     workouts: UserWorkout[];
+
+    @Column({ nullable: true })
+    goal?: string;
 }
