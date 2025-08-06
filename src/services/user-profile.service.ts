@@ -12,18 +12,27 @@ export class UserProfileService {
     ) { }
 
     async create(createUserProfileDto: CreateUserProfileDto): Promise<UserProfile> {
-        const userProfile = this.userProfileRepository.create(createUserProfileDto);
-        return this.userProfileRepository.save(userProfile);
+        console.log('Creating profile with data:', createUserProfileDto);
+        try {
+            const userProfile = this.userProfileRepository.create({
+                ...createUserProfileDto,
+                workoutsPerWeek: createUserProfileDto.workoutsPerWeek || 3,
+                currentStreak: 0,
+                longestStreak: 0,
+                totalWorkouts: 0
+            });
+            const result = await this.userProfileRepository.save(userProfile);
+            console.log('Profile created successfully:', result);
+            return result;
+        } catch (error) {
+            console.error('Error creating profile:', error);
+            throw error;
+        }
     }
 
     async findByUserId(userId: number): Promise<UserProfile> {
         const profile = await this.userProfileRepository.findOne({
-            where: { userId },
-            select: [
-                'id', 'userId', 'age', 'weight', 'height', 'sex',
-                'trainingGoal', 'workoutsPerWeek', 'currentStreak',
-                'longestStreak', 'totalWorkouts', 'createdAt', 'updatedAt'
-            ]
+            where: { userId }
         });
 
         if (!profile) {

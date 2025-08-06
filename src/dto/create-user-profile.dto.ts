@@ -5,4 +5,5 @@ export class CreateUserProfileDto {
     height?: number;
     sex?: string;
     trainingGoal: string;
+    workoutsPerWeek?: number;
 }

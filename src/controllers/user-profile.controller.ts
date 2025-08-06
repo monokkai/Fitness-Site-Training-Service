@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { UserProfileService } from '../services/user-profile.service';
 import { CreateUserProfileDto } from '../dto/create-user-profile.dto';
 import { UserProfile } from 'src/entities/user-profile.entity';
+import { NotFoundException } from '@nestjs/common';
 
 @Controller('user-profiles')
 export class UserProfileController {
