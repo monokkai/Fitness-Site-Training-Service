@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserProfile } from '../entities/user-profile.entity';
@@ -14,14 +14,20 @@ export class UserProfileService {
     async create(createUserProfileDto: CreateUserProfileDto): Promise<UserProfile> {
         console.log('Creating profile with data:', createUserProfileDto);
         try {
-            const userProfile = this.userProfileRepository.create({
+            const userProfileData = {
                 ...createUserProfileDto,
                 workoutsPerWeek: createUserProfileDto.workoutsPerWeek || 3,
                 currentStreak: 0,
                 longestStreak: 0,
                 totalWorkouts: 0,
                 goal: createUserProfileDto.goal || createUserProfileDto.trainingGoal,
-            });
+                age: createUserProfileDto.age ?? null,  // Явно указываем null
+                weight: createUserProfileDto.weight ?? null,
+                height: createUserProfileDto.height ?? null,
+                sex: createUserProfileDto.sex ?? null,
+            };
+
+            const userProfile = this.userProfileRepository.create(userProfileData);
             const result = await this.userProfileRepository.save(userProfile);
             console.log('Profile created successfully:', result);
             return result;
@@ -36,7 +42,6 @@ export class UserProfileService {
         try {
             const profile = await this.userProfileRepository.findOne({
                 where: { userId },
-                cache: true
             });
 
             if (!profile) {

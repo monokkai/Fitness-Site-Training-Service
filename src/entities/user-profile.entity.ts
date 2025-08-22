@@ -9,17 +9,17 @@ export class UserProfile {
     @Column({ unique: true })
     userId: number;
 
-    @Column({ nullable: true })
-    age: number;
+    @Column({ nullable: true, type: 'int' })
+    age: number | null;
 
     @Column({ type: 'decimal', precision: 5, scale: 2, nullable: true })
-    weight: number;
+    weight: number | null;
 
-    @Column({ nullable: true })
-    height: number;
+    @Column({ nullable: true, type: 'int' })
+    height: number | null;
 
-    @Column({ nullable: true })
-    sex: string;
+    @Column({ nullable: true, type: "varchar" })
+    sex: string | null;
 
     @Column()
     trainingGoal: string;
@@ -45,6 +45,6 @@ export class UserProfile {
     @OneToMany(() => UserWorkout, workout => workout.userProfile)
     workouts: UserWorkout[];
 
-    @Column({ nullable: true })
-    goal?: string;
+    @Column({ nullable: true, type: "varchar" })
+    goal: string | null;
 }

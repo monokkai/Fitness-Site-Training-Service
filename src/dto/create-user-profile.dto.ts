@@ -6,19 +6,19 @@ export class CreateUserProfileDto {
 
     @IsNumber()
     @IsOptional()
-    age?: number;
+    age?: number | null;
 
     @IsNumber()
     @IsOptional()
-    weight?: number;
+    weight?: number | null;
 
     @IsNumber()
     @IsOptional()
-    height?: number;
+    height?: number | null;
 
     @IsString()
     @IsOptional()
-    sex?: string;
+    sex?: string | null;
 
     @IsString()
     trainingGoal: string;
@@ -29,5 +29,5 @@ export class CreateUserProfileDto {
 
     @IsString()
     @IsOptional()
-    goal?: string;
+    goal?: string | null;
 }
