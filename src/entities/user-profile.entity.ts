@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { UserWorkout } from './user-workout.entity';
+import { UserLevelProgress } from './user-level-progress.entity';
 
 @Entity('UserProfiles')
 export class UserProfile {
@@ -29,6 +30,15 @@ export class UserProfile {
 
     @Column({ default: 0 })
     currentStreak: number;
+
+    @Column({ default: 1 })
+    currentLevel: number;
+
+    @Column({ default: 0 })
+    totalXP: number;
+
+    @OneToMany(() => UserLevelProgress, progress => progress.userProfile)
+    levelProgress: UserLevelProgress[];
 
     @Column({ default: 0 })
     longestStreak: number;

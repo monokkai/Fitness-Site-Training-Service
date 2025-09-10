@@ -8,6 +8,8 @@ import { UserProfileService } from './services/user-profile.service';
 import { WorkoutService } from './services/workout.service';
 import { UserWorkoutService } from './services/user-workout.service';
 import { DatabaseModule } from '../database.module';
+import { UserLevelController } from './controllers/ user-level.controller';
+import { UserLevelService } from './services/user-level.service';
 
 @Module({
     imports: [
@@ -30,7 +32,17 @@ import { DatabaseModule } from '../database.module';
         }),
         DatabaseModule,
     ],
-    controllers: [UserProfileController, WorkoutController, UserWorkoutController],
-    providers: [UserProfileService, WorkoutService, UserWorkoutService],
+    controllers: [
+        UserProfileController,
+        WorkoutController,
+        UserWorkoutController,
+        UserLevelController
+    ],
+    providers: [
+        UserProfileService,
+        WorkoutService,
+        UserWorkoutService,
+        UserLevelService
+    ],
 })
 export class AppModule { }

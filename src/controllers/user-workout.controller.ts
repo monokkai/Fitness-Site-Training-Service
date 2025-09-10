@@ -1,14 +1,23 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { UserWorkoutService } from '../services/user-workout.service';
-import { AssignWorkoutDto } from '../dto/assign-workout.dto';
 
 @Controller('user-workouts')
 export class UserWorkoutController {
     constructor(private readonly userWorkoutService: UserWorkoutService) { }
 
     @Post()
-    async assignWorkout(@Body() assignWorkoutDto: AssignWorkoutDto) {
-        return this.userWorkoutService.assignWorkout(assignWorkoutDto);
+    async createUserWorkout(
+        @Body() body: { userId: number; workoutId: number; completionTime: number; actualRepeats: number; score: number }
+    ) {
+        return this.userWorkoutService.createUserWorkout(
+            body.userId,
+            body.workoutId,
+            {
+                completionTime: body.completionTime,
+                actualRepeats: body.actualRepeats,
+                score: body.score,
+            }
+        );
     }
 
     @Get(':userId')

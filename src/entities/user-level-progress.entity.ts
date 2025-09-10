@@ -1,20 +1,20 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { UserProfile } from './user-profile.entity';
 
-@Entity('UserWorkouts')
-export class UserWorkout {
+@Entity('UserLevelProgress')
+export class UserLevelProgress {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column({ name: 'user_id' })
     user_id: number;
 
-    @ManyToOne(() => UserProfile, userProfile => userProfile.workouts)
+    @ManyToOne(() => UserProfile, userProfile => userProfile.levelProgress)
     @JoinColumn({ name: 'user_id' })
     userProfile: UserProfile;
 
-    @Column({ name: 'workout_id' })
-    workout_id: number;
+    @Column()
+    level: number;
 
     @Column({ default: false })
     completed: boolean;
@@ -22,14 +22,8 @@ export class UserWorkout {
     @Column({ name: 'completion_time', nullable: true })
     completion_time: number;
 
-    @Column({ name: 'actual_repeats', nullable: true })
-    actual_repeats: number;
-
     @Column({ default: 0 })
     score: number;
-
-    @Column({ default: 1 })
-    attempts: number;
 
     @Column({ name: 'completed_at', type: 'timestamp', nullable: true })
     completed_at: Date;
