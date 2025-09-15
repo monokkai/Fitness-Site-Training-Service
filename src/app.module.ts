@@ -8,8 +8,14 @@ import { UserProfileService } from './services/user-profile.service';
 import { WorkoutService } from './services/workout.service';
 import { UserWorkoutService } from './services/user-workout.service';
 import { DatabaseModule } from '../database.module';
-import { UserLevelController } from './controllers/ user-level.controller';
+import { UserLevelController } from './controllers/user-level.controller';
 import { UserLevelService } from './services/user-level.service';
+
+// Импортируйте сущности
+import { UserLevelProgress } from './entities/user-level-progress.entity';
+import { UserProfile } from './entities/user-profile.entity';
+import { UserWorkout } from './entities/user-workout.entity';
+import { Workout } from './entities/workout.entity';
 
 @Module({
     imports: [
@@ -24,12 +30,18 @@ import { UserLevelService } from './services/user-level.service';
                 password: 'postgres',
                 database: 'trainingdb',
                 entities: [__dirname + '/**/*.entity{.ts,.js}'],
-                synchronize: true,
+                synchronize: false,
                 retryAttempts: 10,
                 retryDelay: 3000,
             }),
             inject: [ConfigService],
         }),
+        TypeOrmModule.forFeature([
+            UserLevelProgress,
+            UserProfile,
+            UserWorkout,
+            Workout
+        ]),
         DatabaseModule,
     ],
     controllers: [

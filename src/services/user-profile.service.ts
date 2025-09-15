@@ -21,7 +21,7 @@ export class UserProfileService {
                 longestStreak: 0,
                 totalWorkouts: 0,
                 goal: createUserProfileDto.goal || createUserProfileDto.trainingGoal,
-                age: createUserProfileDto.age ?? null,  // Явно указываем null
+                age: createUserProfileDto.age ?? null,
                 weight: createUserProfileDto.weight ?? null,
                 height: createUserProfileDto.height ?? null,
                 sex: createUserProfileDto.sex ?? null,

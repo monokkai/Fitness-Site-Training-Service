@@ -5,7 +5,7 @@ export class Workout {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   title: string;
 
   @Column({ type: 'text' })
