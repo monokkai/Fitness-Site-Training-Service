@@ -8,10 +8,10 @@ export class Level {
     @Column({ name: 'level_number' })
     level_number: number;
 
-    @Column()
+    @Column({ nullable: true })
     title: string;
 
-    @Column()
+    @Column({ nullable: true })
     description: string;
 
     @Column({ name: 'required_xp' })

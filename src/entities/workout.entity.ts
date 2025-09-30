@@ -11,7 +11,7 @@ export class Workout {
   @Column({ type: 'text' })
   description: string;
 
-  @Column()
+  @Column({ nullable: true })
   difficulty: string;
 
   @Column({ nullable: true })
@@ -26,7 +26,7 @@ export class Workout {
   @Column({ nullable: true })
   video_url: string;
 
-  @Column()
+  @Column({ nullable: true })
   category: string;
 
   // @Column({ name: 'xp_reward', default: 0 })

@@ -20,6 +20,8 @@ export class UserProfileService {
                 currentStreak: 0,
                 longestStreak: 0,
                 totalWorkouts: 0,
+                totalXP: 0,
+                currentLevel: 1,
                 goal: createUserProfileDto.goal || createUserProfileDto.trainingGoal,
                 age: createUserProfileDto.age ?? null,
                 weight: createUserProfileDto.weight ?? null,
@@ -42,6 +44,7 @@ export class UserProfileService {
         try {
             const profile = await this.userProfileRepository.findOne({
                 where: { userId },
+                relations: ['levelProgress', 'workouts']
             });
 
             if (!profile) {
@@ -49,8 +52,20 @@ export class UserProfileService {
                 throw new NotFoundException();
             }
 
-            console.log('Found profile:', profile);
-            return profile;
+            const profileWithDefaults = {
+                ...profile,
+                totalXP: profile.totalXP || 0,
+                currentLevel: profile.currentLevel || 1,
+                currentStreak: profile.currentStreak || 0,
+                longestStreak: profile.longestStreak || 0,
+                totalWorkouts: profile.totalWorkouts || 0,
+                workoutsPerWeek: profile.workoutsPerWeek || 3,
+                levelProgress: profile.levelProgress || [],
+                workouts: profile.workouts || []
+            };
+
+            console.log('Found profile:', profileWithDefaults);
+            return profileWithDefaults;
         } catch (error) {
             console.error('Database error:', error);
             throw error;
@@ -62,11 +77,19 @@ export class UserProfileService {
         profile.totalXP += xpGained;
         profile.totalWorkouts += 1;
         
-        // Level up logic: every 500 XP = 1 level
         const newLevel = Math.floor(profile.totalXP / 500) + 1;
         if (newLevel > profile.currentLevel) {
             profile.currentLevel = newLevel;
         }
+        
+        return this.userProfileRepository.save(profile);
+    }
+
+    async updateProfile(userId: number, updateData: Partial<UserProfile>): Promise<UserProfile> {
+        const profile = await this.findByUserId(userId);
+        
+        Object.assign(profile, updateData);
+        profile.updatedAt = new Date();
         
         return this.userProfileRepository.save(profile);
     }

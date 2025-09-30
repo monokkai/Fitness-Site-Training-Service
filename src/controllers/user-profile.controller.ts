@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Patch, HttpCode } from '@nestjs/common';
 import { UserProfileService } from '../services/user-profile.service';
 import { CreateUserProfileDto } from '../dto/create-user-profile.dto';
 import { UserProfile } from 'src/entities/user-profile.entity';
@@ -28,5 +28,19 @@ export class UserProfileController {
         @Body() body: { xpGained: number }
     ): Promise<UserProfile> {
         return this.userProfileService.updateXP(+userId, body.xpGained);
+    }
+
+    @Patch(':userId')
+    async updateProfile(
+        @Param('userId') userId: string,
+        @Body() updateData: Partial<UserProfile>
+    ): Promise<UserProfile> {
+        return this.userProfileService.updateProfile(+userId, updateData);
+    }
+
+    @Get('health')
+    @HttpCode(200)
+    health() {
+        return { status: 'ok', service: 'training-service' };
     }
 }
