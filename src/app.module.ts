@@ -10,12 +10,14 @@ import { UserWorkoutService } from './services/user-workout.service';
 import { DatabaseModule } from '../database.module';
 import { UserLevelController } from './controllers/user-level.controller';
 import { UserLevelService } from './services/user-level.service';
+import { LevelController } from './controllers/level.controller';
+import { LevelService } from './services/level.service';
 
-// Импортируйте сущности
 import { UserLevelProgress } from './entities/user-level-progress.entity';
 import { UserProfile } from './entities/user-profile.entity';
 import { UserWorkout } from './entities/user-workout.entity';
 import { Workout } from './entities/workout.entity';
+import { Level } from './entities/level.entity';
 
 @Module({
     imports: [
@@ -40,7 +42,8 @@ import { Workout } from './entities/workout.entity';
             UserLevelProgress,
             UserProfile,
             UserWorkout,
-            Workout
+            Workout,
+            Level
         ]),
         DatabaseModule,
     ],
@@ -48,13 +51,15 @@ import { Workout } from './entities/workout.entity';
         UserProfileController,
         WorkoutController,
         UserWorkoutController,
-        UserLevelController
+        UserLevelController,
+        LevelController
     ],
     providers: [
         UserProfileService,
         WorkoutService,
         UserWorkoutService,
-        UserLevelService
+        UserLevelService,
+        LevelService
     ],
 })
 export class AppModule { }

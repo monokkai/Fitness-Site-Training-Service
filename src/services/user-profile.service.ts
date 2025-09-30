@@ -56,4 +56,18 @@ export class UserProfileService {
             throw error;
         }
     }
+
+    async updateXP(userId: number, xpGained: number): Promise<UserProfile> {
+        const profile = await this.findByUserId(userId);
+        profile.totalXP += xpGained;
+        profile.totalWorkouts += 1;
+        
+        // Level up logic: every 500 XP = 1 level
+        const newLevel = Math.floor(profile.totalXP / 500) + 1;
+        if (newLevel > profile.currentLevel) {
+            profile.currentLevel = newLevel;
+        }
+        
+        return this.userProfileRepository.save(profile);
+    }
 }

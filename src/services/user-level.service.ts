@@ -48,11 +48,17 @@ export class UserLevelService {
             });
         }
 
+        // Calculate XP based on level difficulty
+        const xpGained = level <= 2 ? 50 : level <= 4 ? 100 : 150;
+        userProfile.totalXP += xpGained;
+        userProfile.totalWorkouts += 1;
+        
+        // Update current level if this level was completed
         if (level === userProfile.currentLevel) {
             userProfile.currentLevel += 1;
-            userProfile.totalXP += 100;
-            await this.userProfileRepository.save(userProfile);
         }
+        
+        await this.userProfileRepository.save(userProfile);
 
         return this.userLevelRepository.save(levelProgress);
     }

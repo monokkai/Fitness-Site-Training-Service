@@ -28,8 +28,8 @@ export class WorkoutService {
 
     async getWorkoutsByLevel(level: number): Promise<Workout[]> {
         return this.workoutRepository.find({
-            where: { level_requirement: level },
-            order: { exercise_order: 'ASC' }
+            // where: { level_requirement: level },
+            // order: { exercise_order: 'ASC' }
         });
     }
 

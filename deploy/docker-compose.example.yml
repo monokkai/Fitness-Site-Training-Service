@@ -1,0 +1,35 @@
+services:
+  training-service:
+    container_name: # container name
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      # Set your database URL here
+    depends_on:
+      - training-db
+    networks:
+      - auth-network
+
+  training-db:
+    image: postgres:13
+    container_name: # db name
+    env_file:
+      - .env
+    ports:
+      # port
+    volumes:
+      # voulmes
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - auth-network
+
+volumes:
+  training_db_data:
+    name: training_db_data
